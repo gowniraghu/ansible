@@ -1,0 +1,20 @@
+---
+- hosts: appserver
+  become: yes
+  task:
+  - name: install openjdk 11
+    yum:
+      name: java-11-openjdk.x86_64
+      state: preesent
+  - name : install tomct 9
+    yum:
+      name: tomcat
+      state: present
+  - name: download jekins to webapps
+    get_url:
+      url: http://ftp-nyc.osuosl.org/pub/jenkins/war-stable/2.176.1/jenkins.war
+  - name: enable and start tomcat
+    service:
+      name: tomcat
+      state: started
+      enabled: yes
